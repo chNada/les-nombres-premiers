@@ -1,25 +1,48 @@
 #include <stdio.h>
 
 int main() {
-    int a,b,i;
+    int a;
     printf("Try: ");
-    scanf("%d",&a);
+    scanf("%d", &a);
 
-    for(b = 2; b <= a; b++) {
+    int tab[a+1];
 
-        int isPrime = 1;
+    // 1) Initialisation
+    for(int i = 0; i <= a; i++) {
+        tab[i] = 1;   // كنفرضو أن كلشي أعداد أولية
+    }
 
-        for(i = 2; i*i <= b; i++) {  
-            if(b % i == 0) {  
-                isPrime = 0;  
-                break;
+    tab[0] = 0;
+    tab[1] = 0;
+
+    // 2) Crible d'Ératosthène
+    for(int p = 2; p*p <= a; p++) {
+
+        if(tab[p] == 1) {
+
+            printf("\n%d est premier", p);
+            printf("\nSuppression des multiples de %d :", p);
+
+            // نحيدو المضاعفات
+            for(int m = p*p; m <= a; m += p) {
+                if(tab[m] == 1) {
+                    tab[m] = 0;
+                    printf(" %d", m);
+                }
             }
-        }
-
-        if(isPrime == 1) {
-            printf("%d est premier\n", b);
+            printf("\n");
         }
     }
 
+    // 3) Affichage des nombres premiers
+    printf("\nListe des nombres premiers jusqu'à %d :\n", a);
+    for(int i = 2; i <= a; i++) {
+        if(tab[i] == 1) {
+            printf("%d ", i);
+        }
+    }
+
+    printf("\n");
     return 0;
 }
+
